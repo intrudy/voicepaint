@@ -6,7 +6,7 @@
     "permissions": ["activeTab", "audioCapture", "scripting"],
     "action": {
       "default_popup": "ui/popup.html",
-      "default_icon": "images/logo.png"
+      "default_icon": "icons/logo.png"
     },
     "content_scripts": [
         {
