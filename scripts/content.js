@@ -22,6 +22,7 @@ document.body.onclick = function() {
 recognition.onerror = function(event) {
     console.log(`Speech recognition error detected: ${event.error}`)
     console.log(`Additional information: ${event.message}`)
+    console.log(event)
 }
 
 recognition.onspeechend = function() {
