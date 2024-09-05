@@ -4,7 +4,7 @@
     "name": "Voicepaint",
     "description": "Use voice prompts with LLM providers",
     "action": {
-      "default_popup": "index.html",
+      "default_popup": "ui/popup.html",
       "default_icon": "images/logo.png"
-    }
+    },
 }
