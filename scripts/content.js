@@ -30,10 +30,7 @@ recognition.onspeechend = function() {
 }
 
 recognition.onresult = function(event) {
-    // console.log('Color: ' + event.results[0][0].transcript)
-    // console.log('Confidence: ' + event.results[0][0].confidence)
-
-    var textarea = document.getElementById(":rl:")
+    var textarea = document.querySelector('textarea[placeholder="Ask Meta AI anything..."')
     textarea.innerText = event.results[0][0].transcript
     msgBtn.click()
 }
