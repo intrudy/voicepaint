@@ -23,7 +23,11 @@ speakBtn.style.display = "block"
 document.body.appendChild(speakBtn)
 
 speakBtn.onclick = function () {
-    recognition.start()
+    navigator.webkitGetUserMedia(
+        {audio: true},
+        (stream) => recognition.start(),
+        (err) => window.alert("Cannot record speech, please allow microphone")
+    )
 }
 
 recognition.onerror = function(event) {
