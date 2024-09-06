@@ -9,11 +9,6 @@ recognition.continuous = false
 recognition.maxAlternatives = 1
 recognition.interimResults = false
 
-var msgBtn = document.querySelector('div[aria-label="Send Message"]')
-msgBtn.onclick = function (event) {
-    console.log("Send message!")
-    console.log(JSON.stringify(event, null, 2))
-}
 
 document.body.onclick = function() {
     recognition.start()
@@ -32,6 +27,7 @@ recognition.onspeechend = function() {
 }
 
 recognition.onresult = function(event) {
+    var msgBtn = document.querySelector('div[aria-label="Send Message"]')
     var textarea = document.querySelector('textarea[placeholder="Ask Meta AI anything..."')
     textarea.innerText = event.results[0][0].transcript
     msgBtn.click()
