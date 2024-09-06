@@ -1,14 +1,34 @@
 
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
-var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+// var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+// var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
+// var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
-var recognition = new SpeechRecognition()
+var recognition = new webkitSpeechRecognition()
 recognition.lang = 'en-US'
 recognition.continuous = false
 recognition.maxAlternatives = 1
 recognition.interimResults = false
 
+
+document.body.onload = function(page) {
+    const speakBtn = document.createElement("button")
+    speakBtn.id = "speechToTextButton";
+    speakBtn.textContent = "🎙️";
+    speakBtn.style.position = "fixed";
+    speakBtn.style.bottom = "20px";
+    speakBtn.style.right = "20px";
+    speakBtn.style.zIndex = "10000";
+    speakBtn.style.background = "#000";
+    speakBtn.style.color = "#fff";
+    speakBtn.style.border = "none";
+    speakBtn.style.borderRadius = "50%";
+    speakBtn.style.width = "50px";
+    speakBtn.style.height = "50px";
+    speakBtn.style.fontSize = "24px";
+    speakBtn.style.cursor = "pointer";
+    speakBtn.style.display = "none"; // 默认隐藏
+    document.body.appendChild(speakBtn);
+}
 
 document.body.onclick = function() {
     recognition.start()
