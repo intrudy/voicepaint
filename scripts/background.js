@@ -52,24 +52,26 @@ xr-spatial-tracking=();
 report-to="permissions_policy"
 
 */
+
+const ruleId = Math.floor(Math.random() * 100)
+
 chrome.declarativeNetRequest.updateDynamicRules({
+    removeRuleIds: [ruleId],
     addRules: [
         {
-            id: 1,
-            priority: 1,
+            id: ruleId,
             action: {
                 type: "modifyHeaders",
                 requestHeaders: [
                     {
                         operation: "set",
                         header: "Permissions-Policy",
-                        value: "microphone=(self)"
+                        value: "microphone=(*)"
                     }
                 ]
             },
             condition: {
-                urlFilter: "*",
-                initiatorDomains: "meta.ai",
+                initiatorDomains: ["meta.ai"],
                 resourceTypes: Object.values(chrome.declarativeNetRequest.ResourceType)
             },
         }
