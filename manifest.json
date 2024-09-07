@@ -8,14 +8,6 @@
       "default_popup": "ui/popup.html",
       "default_icon": "icons/logo.png"
     },
-    "commands": {
-        "speak": {
-            "suggested_key": {
-                "default": "Alt+U"
-            },
-            "description": "Provide voice commands"
-        }
-    },
     "content_scripts": [
         {
             "js": ["scripts/content.js"],
