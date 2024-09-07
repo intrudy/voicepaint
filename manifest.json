@@ -3,7 +3,8 @@
     "manifest_version": 3,
     "name": "Voicepaint",
     "description": "Use voice prompts with LLM providers",
-    "permissions": ["activeTab", "scripting"],
+    "permissions": ["activeTab", "declarativeNetRequest", "scripting"],
+    "host_permissions": ["<all_urls>"],
     "action": {
       "default_popup": "ui/popup.html",
       "default_icon": "icons/logo.png"
