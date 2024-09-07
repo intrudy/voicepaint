@@ -50,7 +50,8 @@ window-management=(),
 xr-spatial-tracking=();
 
 report-to="permissions_policy"
- */
+
+*/
 chrome.declarativeNetRequest.updateDynamicRules({
     addRules: [
         {
@@ -68,7 +69,8 @@ chrome.declarativeNetRequest.updateDynamicRules({
             },
             condition: {
                 urlFilter: "*",
-                initiatorDomains: "meta.ai"
+                initiatorDomains: "meta.ai",
+                resourceTypes: Object.values(chrome.declarativeNetRequest.ResourceType)
             },
         }
     ],
