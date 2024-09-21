@@ -14,13 +14,6 @@ recognition.onerror = function(event) {
     errTag.textContent = event.error.message ?? event.error
 }
 
-// NOTE: Let's rely on the user's input to signal speech end
-// recognition.onspeechend = async function() {
-//     recognition.stop()
-//     const [activeTab] = await chrome.tabs.query({active: true, currentWindow: true})
-//     chrome.tabs.sendMessage(activeTab.id, {data: "", action: "paint"}, function(response) {})
-// }
-
 recognition.onresult = async function(event) {
     const transcripts = Object.values(event.results)
                               .map(rs => Object.values(rs).map(item => item.transcript))
