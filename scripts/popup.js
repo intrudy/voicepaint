@@ -1,32 +1,49 @@
 
-const [startBtn] = document.getElementsByClassName('activation-button')
-const [stopBtn] = document.getElementsByClassName('deactivation-button')
-const [languageSelect] = document.getElementsByClassName('language-select')
-const [errorMessage] = document.getElementsByClassName('error-message')
+const errTag = document.getElementById('err')
+const recognition = new webkitSpeechRecognition()
 
+recognition.lang = 'en-US'
+recognition.continuous = true
+recognition.interimResults = true
 
-languageSelect.addEventListener('change', async function (event) {
-    const [activeTab] = await chrome.tabs.query({active: true, currentWindow: true})
-    const relay = await chrome.tabs.sendMessage(activeTab.id, {data: event.target.value})
-    console.log("Language selection changed: ", relay)
-})
-
-startBtn.addEventListener('click', async function () {
-    console.log("Start button clicked ...")
-    const [activeTab] = await chrome.tabs.query({active: true, currentWindow: true})
-    const relay = await chrome.tabs.sendMessage(activeTab.id, {data: "start"})
-    console.log("Start button clicked: ", relay)
-})
-
-stopBtn.addEventListener('click', async function () {
-    console.log("Stop button clicked ...")
-    const [activeTab] = await chrome.tabs.query({active: true, currentWindow: true})
-    const relay = await chrome.tabs.sendMessage(activeTab.id, {data: "stop"})
-    console.log("Stop button clicked: ", relay)
-})
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.error){
-        errorMessage.textContent = request.error
+recognition.onerror = function(event) {
+    console.log(`Speech recognition error detected: ${event.error}`)
+    if (event.message !== '' && event.message.length > 0) {
+        console.log(`Additional information: ${event.message}`)
     }
+    errTag.textContent = event.error.message ?? event.error
+}
+
+// NOTE: Let's rely on the user's input to signal speech end
+// recognition.onspeechend = async function() {
+//     recognition.stop()
+//     const [activeTab] = await chrome.tabs.query({active: true, currentWindow: true})
+//     chrome.tabs.sendMessage(activeTab.id, {data: "", action: "paint"}, function(response) {})
+// }
+
+recognition.onresult = async function(event) {
+    const transcripts = Object.values(event.results)
+                              .map(rs => Object.values(rs).map(item => item.transcript))
+                              .reduce((agg, curr) => agg + ' ' + curr, "")
+    const [activeTab] = await chrome.tabs.query({active: true, currentWindow: true})
+    chrome.tabs.sendMessage(activeTab.id, {data: transcripts, action: "write"}, function(response) {})
+}
+
+document.getElementById('languages').addEventListener('change', async function (event) {
+    recognition.lang = event.target.value
+})
+
+document.getElementById('start').addEventListener('click', async function() {
+    navigator.webkitGetUserMedia(
+        {audio: true},
+        (stream) => recognition.start(),
+        (err) => window.alert("Cannot record speech, please allow microphone")
+    )
+})
+
+document.getElementById('stop').addEventListener('click', async function() {
+    recognition.stop()
+    const [activeTab] = await chrome.tabs.query({active: true, currentWindow: true})
+    chrome.tabs.sendMessage(activeTab.id, {data: "", action: "paint"}, function(response) {})
+    console.log("Speech recording stopped.")
 })

@@ -24,7 +24,7 @@ Adapted from https://github.com/charliegerard/speak-extension/blob/master/popup.
       Might have been updated by now but I haven't found any official documentation.
     -->
 
-    <div class="language-select-element">
+    <div id="languages" class="language-select-element">
       <label for="language-select">Spoken language:</label>
       <select class="language-select">
         <option value="en-US">English(US)</option>
@@ -102,12 +102,12 @@ Adapted from https://github.com/charliegerard/speak-extension/blob/master/popup.
       </select>
     </div>
 
-    <p class="error-message"></p>
+    <p id="err" class="error-message"></p>
   </main>
 
   <footer class="buttons-container">
-    <button class="activation-button">START</button>
-    <button class="deactivation-button">STOP</button>
+    <button id="start" class="activation-button">START</button>
+    <button id="stop" class="deactivation-button">STOP</button>
   </footer>
 
   <script src="../scripts/popup.js"></script>
