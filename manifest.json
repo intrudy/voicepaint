@@ -16,8 +16,5 @@
                 "https://www.meta.ai/*"
             ]
         }
-    ],
-    "background": {
-        "service_worker": "scripts/background.js"
-    }
+    ]
 }
